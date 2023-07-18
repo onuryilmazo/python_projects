@@ -174,7 +174,7 @@ car.start_engine()
 # Engine started.
 # Car engine started.
 
-#Çoklu kalıtım 
+#Çoklu kalıtım (multiple inheritance)
 
 class Animal:
     def __init__(self, name):
@@ -185,7 +185,7 @@ class Animal:
 
 
 class Flyable:
-    def fly(self):
+    def fly(self): # bu sınıf örneklenebilir bir sınıf olmadığı için sadece uçabilme yeteneğine sahip nesnelerin ortak özelliklerini tanımlamak için kullanılmıştır.
         print("Flying...")
 
 
@@ -202,3 +202,92 @@ print(bird.wingspan)  # Çıktı: 2
 
 bird.eat()  # Çıktı: Animal is eating.
 bird.fly()  # Çıktı: Flying...
+
+#Muktiple Inheritance yaparken iki parent sınıf __init fonksiyona sahip olamaz.
+'''
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def eat(self):
+        print("Animal is eating.")
+
+
+class Flyable:
+    def __init__(self, altitude):
+        self.altitude = altitude
+
+    def fly(self):
+        print("Flying...")
+
+
+class Bird(Animal, Flyable):
+    def __init__(self, name, altitude, wingspan):
+        # Hangi üst sınıfın __init__ metodunu çağırmalıyız?
+        # super().__init__(name)  # Bu şekilde hata alırız
+        # super().__init__(altitude)  # Ya da bu şekilde hata alırız
+        self.wingspan = wingspan
+
+'''
+#method overriding, alt sınıfların üst sınıfların metotlarını aynı isimle geçersiz
+# kılmasına izin verir ve bu şekilde sınıflar arasında farklı davranışlar elde etmek için kullanılır.
+
+class Animal:
+    def make_sound(self):
+        print("Animal is making a sound.")
+
+
+class Dog(Animal):
+    def make_sound(self):
+        print("Dog is barking.")
+
+
+class Cat(Animal):
+    def make_sound(self):
+        print("Cat is meowing.")
+
+
+# Animal, Dog ve Cat sınıflarından örnekler oluşturma
+animal = Animal()
+dog = Dog()
+cat = Cat()
+
+# Her bir örneğin make_sound metodunu çağırma
+animal.make_sound()  # Çıktı: Animal is making a sound.
+dog.make_sound()  # Çıktı: Dog is barking.
+cat.make_sound()  # Çıktı: Cat is meowing.
+
+#Bileşim(Composition)
+
+class Engine:
+    def start(self):
+        print("Engine started.")
+
+    def stop(self):
+        print("Engine stopped.")
+
+
+class Car:
+    def __init__(self):
+        self.engine = Engine()
+
+    def start(self):
+        print("Starting the car...")
+        self.engine.start()
+
+    def stop(self):
+        print("Stopping the car...")
+        self.engine.stop()
+
+
+# Car sınıfından örnek oluşturma (instance)
+car = Car()
+car.start()
+# Çıktı:
+# Starting the car...
+# Engine started.
+
+car.stop()
+# Çıktı:
+# Stopping the car...
+# Engine stopped.
